@@ -1,6 +1,8 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+
 //import Home from '../pages/Home'; // tirar o home pois ele já está configurado no stack
 import Movies from '../pages/Movies';
 
@@ -10,9 +12,36 @@ const Drawer = createDrawerNavigator();
 
 function Routes(){
     return(
-        <Drawer.Navigator>
-            <Drawer.Screen name="HomeDrawer" component={StackRoutes} />
-            <Drawer.Screen name="Filmes" component={Movies} />
+        <Drawer.Navigator
+            screenOptions={{
+                headerShown: false,
+                drawerStyle: {
+                    backgroundColor: '#090A0E',
+                    paddingTop: 20
+                },
+                drawerActiveBackgroundColor: '#E72F49',
+                drawerActiveTintColor: '#FFFFFF',
+                drawerInactiveTintColor: '#FFFFFF'
+            }}
+        >
+            <Drawer.Screen name="HomeDrawer" 
+                           component={StackRoutes}
+                           options={{
+                               title: 'Home',
+                               drawerIcon: ({focused, size, color}) => (
+                                <MaterialCommunityIcons name={focused ? 'movie-open' : 'movie-outline'} size={size} color={color} />
+                               )
+                           }}
+                           />
+            <Drawer.Screen name="Filmes" 
+                           component={Movies} 
+                           options={{
+                               title: 'Meus filmes',
+                               drawerIcon: ({focused, size, color}) => (
+                                <MaterialCommunityIcons name={focused ? 'archive' : 'archive-outline'} size={size} color={color} />
+                               )
+                           }}
+                           />
         </Drawer.Navigator>
     )
 }
