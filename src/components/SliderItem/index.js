@@ -9,16 +9,16 @@ import {
 
 import {Ionicons} from '@expo/vector-icons';
 
-export default function SliderItem(){
+export default function SliderItem({data}){
     return(
         <Container activeOpacity={0.7}>
             <BannerItem 
-                source={{uri: 'https://images.unsplash.com/photo-1593642532842-98d0fd5ebc1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'}}
+                source={{uri: `https://image.tmdb.org/t/p/original/${data.poster_path}`}}
             />
-            <Title numberOfLines={1}>Vingadores</Title>
+            <Title numberOfLines={1}>{data.title}</Title>
             <RateContainer>
                 <Ionicons name="md-star" size={12} color="#E7A74E" />
-                <Rate>9/10</Rate>
+                <Rate>{data.vote_average}/10</Rate>
             </RateContainer>
         </Container>
     )
