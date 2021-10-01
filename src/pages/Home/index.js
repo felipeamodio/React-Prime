@@ -10,6 +10,7 @@ import {
         Banner,
         SliderMovie
        } from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 import Header from '../../components/Header';
 import SliderItem from '../../components/SliderItem';
@@ -21,6 +22,8 @@ import api, {key} from '../../services/api';
 import {getListMovies, randomBanner} from '../../utils/movie';
 
 export default function Home(){
+    const navigation = useNavigation();
+
     const [nowMovies, setNowMovies] = useState([]);
     const [popularMovies, setPopularMovies] = useState([]);
     const [topMovies, setTopMovies] = useState([]);
@@ -92,6 +95,10 @@ export default function Home(){
         }
     }, []) // toda vez q a colchete estiver vazia ele vai chamar o que tem dentro da função quando a tela abrir
 
+    function navigationDetail(item){
+        navigation.navigate('Detalhes', {id: item.id})
+    }
+
     //verificando se o loading é true para passar o Indicator
     if(loading){
         return(
@@ -118,7 +125,7 @@ export default function Home(){
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Title>Em Cartaz</Title>
 
-                <BannerButton activeOpacity={0.9} onPress={() => alert('Banner')}>
+                <BannerButton activeOpacity={0.9} onPress={() => navigationDetail(bannerMovie)}>
                     <Banner 
                     source={{uri: `https://image.tmdb.org/t/p/original/${bannerMovie.poster_path}`}}
                     resizeMethod="resize"
@@ -129,7 +136,7 @@ export default function Home(){
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={nowMovies}
-                    renderItem={({item}) => <SliderItem data={item} />}
+                    renderItem={({item}) => <SliderItem data={item} navigatePage={() => navigationDetail(item)} />}
                     keyExtractor={(item) => String(item.id)}
                 />
 
@@ -143,7 +150,7 @@ export default function Home(){
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={popularMovies}
-                    renderItem={({item}) => <SliderItem data={item} />}
+                    renderItem={({item}) => <SliderItem data={item} navigatePage={() => navigationDetail(item)} />}
                     keyExtractor={(item) => String(item.id)}
                 />
 
@@ -157,7 +164,7 @@ export default function Home(){
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={topMovies}
-                    renderItem={({item}) => <SliderItem data={item} />}
+                    renderItem={({item}) => <SliderItem data={item} navigatePage={() => navigationDetail(item)} />}
                     keyExtractor={(item) => String(item.id)}
                 />
             </ScrollView>
