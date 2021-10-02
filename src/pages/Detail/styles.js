@@ -73,7 +73,13 @@ export const Title = styled.Text`
     min-height: 35px;
  `;
 
-// export const Banner = styled.Image``;
+ export const Description = styled.Text`
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 30px;
+    color: #FFFFFF;
+    line-height: 20px;
+ `;
 // export const Banner = styled.Image``;
 // export const Banner = styled.Image``;
 // export const Banner = styled.Image``;

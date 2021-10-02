@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {ScrollView, Modal} from 'react-native';
 import {
         Container,
         Header,
@@ -8,7 +9,8 @@ import {
         Title,
         ContentArea,
         Rate,
-        ListGenres
+        ListGenres,
+        Description
         } from './styles';
 import {Feather, Ionicons} from '@expo/vector-icons';
 import api, {key} from '../../services/api';
@@ -17,10 +19,12 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import Stars from 'react-native-stars';
 
 import Genres from '../../components/Genres';
+import ModalLink from '../../components/ModalLink';
 
 export default function Detail(){
     const navigation = useNavigation();
     const route = useRoute(); // para ter acesso ao parametro que mandamos na home
+    const [openLink, setOpenLink] = useState(false);
 
     const [movie, setMovie] = useState({});
 
@@ -68,7 +72,7 @@ export default function Detail(){
                     resizeMethod="resize"
              />
 
-             <ButtonLink>
+             <ButtonLink onPress={() => setOpenLink(true)}>
                  <Feather name="link" size={24} color="#FFFFFF" />
              </ButtonLink>
 
@@ -95,6 +99,23 @@ export default function Detail(){
                 keyExtractor={(item) => String(item.id)}
                 renderItem={({item}) => <Genres data={item} />}
             />
+
+            {
+                // Descrição
+            }
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Title>Descrição</Title>
+                <Description>{movie?.overview}</Description>
+            </ScrollView>
+
+            <Modal animationType="slide" transparent={true} visible={openLink}>
+                <ModalLink
+                    link={movie?.homepage}
+                    title={movie?.title}
+                    closeModal={() => setOpenLink(false)}
+                />
+            </Modal>
         </Container>
     )
 }
