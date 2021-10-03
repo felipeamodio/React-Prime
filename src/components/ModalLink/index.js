@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {BackButton, Name} from './styles';
 import {Feather} from '@expo/vector-icons';
 import {WebView} from 'react-native-webview';
