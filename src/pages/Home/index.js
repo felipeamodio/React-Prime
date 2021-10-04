@@ -28,6 +28,7 @@ export default function Home(){
     const [popularMovies, setPopularMovies] = useState([]);
     const [topMovies, setTopMovies] = useState([]);
     const [bannerMovie, setBannerMovie] = useState({});
+    const [input, setInput] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -99,6 +100,16 @@ export default function Home(){
         navigation.navigate('Detalhes', {id: item.id})
     }
 
+    //função para input pesquisar
+    function handleSearchMovie(){
+        if(input === ''){
+            alert('Você não inseriu nada na barra de busca 🥺')
+            return; // passa o return para ele parar de prosseguir e não ir para a navegação
+        }
+        navigation.navigate('Pesquisar', {name: input}) //passando uma propriedade que vai ser o input q será digitado
+        setInput('') //zerando o input depois de pesquisar
+    }
+
     //verificando se o loading é true para passar o Indicator
     if(loading){
         return(
@@ -116,8 +127,10 @@ export default function Home(){
                 <Input 
                     placeholder="Ex: Vingadores"
                     placeholderTextColor="#DDD"
+                    value={input}
+                    onChangeText={(text) => setInput(text)}
                 />
-                <SearchButton>
+                <SearchButton onPress={handleSearchMovie}>
                     <Feather name="search" size={30} color="#FFFFFF" />
                 </SearchButton>
             </SearchContainer>
